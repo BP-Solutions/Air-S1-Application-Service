@@ -1,0 +1,15 @@
+{
+  "name": "air-s1-application-service",
+  "version": "1.0.0",
+  "description": "Node.JS application manager service",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mqtt": "^5.7.0"
+  }
+}
