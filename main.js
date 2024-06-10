@@ -1,17 +1,12 @@
 import mqtt from "mqtt";
-
-import config from './config/device-conf.json' assert { type: 'json' };
-
-export let globalConfig = config;
-
+import config from './config/device-conf.json' assert {type: 'json'};
 import {publishMessage} from "./mqtt/publishMessage.js";
-import SerialPort from "serialport";
-import Readline from "@serialport/parser-readline";
+import {SerialPort} from "serialport";
+import {ReadlineParser} from "@serialport/parser-readline";
 import network from "network";
 
-
+export let globalConfig = config;
 export let client = mqtt.connect(config.server);
-
 
 let mqttError = false;
 
@@ -28,18 +23,16 @@ const createMessageObject = () => ({
 
 async function sendMsg() {
     const messageObject = createMessageObject();
-    try{
+    try {
         await publishMessage(messageObject);
         mqttError = false;
-    }catch(error){
+    } catch (error) {
         mqttError = true;
     }
 }
 
-
 client.on('connect', () => {
     console.log('Connected to MQTT broker');
-
     setInterval(sendMsg, 3000);
 });
 
@@ -49,19 +42,15 @@ client.on('error', (err) => {
     mqttError = true;
 });
 
-
-
-
-
 // serial
-const port = new SerialPort('/dev/ttyS1', {
+const port = new SerialPort({
+    path: '/dev/ttyS1',
     baudRate: 115200
 });
 
-const parser = port.pipe(new Readline({ delimiter: '\r\n' }));
+const parser = port.pipe(new ReadlineParser({delimiter: '\r\n'}));
 
-async function sendStatus(){
-
+async function sendStatus() {
     // Function to check Ethernet connection status
     let ethconnected = false;
 
@@ -88,10 +77,8 @@ async function sendStatus(){
     });
 }
 
-
 port.on('open', () => {
     console.log('Serial Port Opened');
-
     setInterval(sendStatus, 3000);
 });
 
