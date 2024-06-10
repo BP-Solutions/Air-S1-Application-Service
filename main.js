@@ -52,7 +52,7 @@ async function sendMsg() {
 
 client.on('connect', () => {
     console.log('Connected to MQTT broker');
-    setInterval(sendMsg, 3000);
+    setInterval(sendMsg, 1000);
 });
 
 // Handle error event
