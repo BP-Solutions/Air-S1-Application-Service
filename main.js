@@ -10,7 +10,17 @@ export let client = mqtt.connect(config.server);
 
 let mqttError = false;
 
-const createMessageObject = () => ({
+async function getNetwork() {
+    await network.get_active_interface((err, activeInterface) => {
+        if (err) {
+            console.error(`Error: ${err.message}`);
+            return;
+        }
+        return activeInterface;
+    });
+}
+
+const createMessageObject = async () => ({
     deviceID: config.id,
     health: 'ok',
     readings: {
@@ -18,11 +28,12 @@ const createMessageObject = () => ({
         humidity: 60,
         pm25: 35
     },
+    interface: await getNetwork(),
     timestamp: new Date().toISOString()
 });
 
 async function sendMsg() {
-    const messageObject = createMessageObject();
+    const messageObject = await createMessageObject();
     try {
         await publishMessage(messageObject);
         mqttError = false;
