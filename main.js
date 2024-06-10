@@ -60,6 +60,8 @@ async function sendStatus() {
             return;
         }
 
+        ethconnected = activeInterface.length >= 1;
+
         console.log(activeInterface);
         // if (activeInterface && activeInterface.type === 'Wired') {
         //     ethconnected = true;
