@@ -13,6 +13,7 @@
     "@serialport/parser-readline": "^12.0.0",
     "mqtt": "^5.7.0",
     "network": "^0.7.0",
-    "serialport": "^12.0.0"
+    "serialport": "^12.0.0",
+    "systeminformation": "^5.22.10"
   }
 }
