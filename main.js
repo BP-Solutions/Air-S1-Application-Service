@@ -1,7 +1,5 @@
 import mqtt from "mqtt";
 
-import "serial"
-
 import config from './config/device-conf.json' assert { type: 'json' };
 
 export let globalConfig = config;
