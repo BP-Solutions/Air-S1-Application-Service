@@ -1,13 +1,21 @@
 import mqtt from "mqtt";
 
+import "serial"
+
 import config from './config/device-conf.json' assert { type: 'json' };
 
 export let globalConfig = config;
 
 import {publishMessage} from "./mqtt/publishMessage.js";
+import SerialPort from "serialport";
+import Readline from "@serialport/parser-readline";
+import network from "network";
 
 
 export let client = mqtt.connect(config.server);
+
+
+let mqttError = false;
 
 const createMessageObject = () => ({
     deviceID: config.id,
@@ -22,7 +30,12 @@ const createMessageObject = () => ({
 
 async function sendMsg() {
     const messageObject = createMessageObject();
-    await publishMessage(messageObject);
+    try{
+        await publishMessage(messageObject);
+        mqttError = false;
+    }catch(error){
+        mqttError = true;
+    }
 }
 
 
@@ -35,4 +48,59 @@ client.on('connect', () => {
 // Handle error event
 client.on('error', (err) => {
     console.error('Connection error:', err);
+    mqttError = true;
+});
+
+
+
+
+
+// serial
+const port = new SerialPort('/dev/ttyS1', {
+    baudRate: 115200
+});
+
+const parser = port.pipe(new Readline({ delimiter: '\r\n' }));
+
+async function sendStatus(){
+
+    // Function to check Ethernet connection status
+    let ethconnected = false;
+
+    network.get_active_interface((err, activeInterface) => {
+        if (err) {
+            console.error(`Error: ${err.message}`);
+            return;
+        }
+
+        if (activeInterface && activeInterface.type === 'Wired') {
+            ethconnected = true;
+        } else {
+            ethconnected = false;
+        }
+    });
+
+    let statString = `{"ethernet":${ethconnected}, "mqttError":${mqttError}};\n`;
+
+    port.write(statString, (err) => {
+        if (err) {
+            return console.error('Error on write:', err.message);
+        }
+        console.log('Message written');
+    });
+}
+
+
+port.on('open', () => {
+    console.log('Serial Port Opened');
+
+    setInterval(sendStatus, 3000);
+});
+
+parser.on('data', (data) => {
+    console.log('Received data:', data);
+});
+
+port.on('error', (err) => {
+    console.error('Serial Error:', err.message);
 });
