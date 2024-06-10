@@ -72,7 +72,7 @@ async function sendStatus() {
         // }
     });
 
-    let statString = `{"ethernet":${JSON.stringify(interfaces)}, "mqttError":${mqttError}};\n`;
+    let statString = `{"ethernet":${interfaces}, "mqttError":${mqttError}};\n`;
 
     port.write(statString, (err) => {
         if (err) {
