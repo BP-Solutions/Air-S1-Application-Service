@@ -5,7 +5,7 @@ export async function publishMessage(msg) {
 
     const topic = `${globalConfig.topic}`;
 
-    client.publish(topic, msgPayload, (err) => {
+    client.publish(topic, msgPayload, { qos: 2, retain: false },(err) => {
         if (err) {
             console.error('Failed to publish message:', err);
             throw err;
