@@ -33,7 +33,9 @@ const createMessageObject = async () => {
             humidity: 60,
             pm25: 35
         },
-        network: networkInfo,
+        deviceTelemetry: {
+            network: networkInfo,
+        },
         timestamp: new Date().toISOString()
     };
 };
