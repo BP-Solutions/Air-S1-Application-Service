@@ -33,7 +33,7 @@ const createMessageObject = async () => {
             humidity: 60,
             pm25: 35
         },
-        test: networkInfo,
+        network: networkInfo,
         timestamp: new Date().toISOString()
     };
 };
