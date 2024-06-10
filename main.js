@@ -28,7 +28,7 @@ const createMessageObject = async () => ({
         humidity: 60,
         pm25: 35
     },
-    interface: await getNetwork(),
+    test: getNetwork(),
     timestamp: new Date().toISOString()
 });
 
