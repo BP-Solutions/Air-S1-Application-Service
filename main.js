@@ -53,6 +53,7 @@ const parser = port.pipe(new ReadlineParser({delimiter: '\r\n'}));
 async function sendStatus() {
     // Function to check Ethernet connection status
     let ethconnected = false;
+    let interfaces;
 
     network.get_active_interface((err, activeInterface) => {
         if (err) {
@@ -61,6 +62,7 @@ async function sendStatus() {
         }
 
         ethconnected = activeInterface.length >= 1;
+        interfaces = activeInterface;
 
         console.log(activeInterface);
         // if (activeInterface && activeInterface.type === 'Wired') {
@@ -70,7 +72,7 @@ async function sendStatus() {
         // }
     });
 
-    let statString = `{"ethernet":${ethconnected}, "mqttError":${mqttError}};\n`;
+    let statString = `{"ethernet":${JSON.stringify(interfaces)}, "mqttError":${mqttError}};\n`;
 
     port.write(statString, (err) => {
         if (err) {
