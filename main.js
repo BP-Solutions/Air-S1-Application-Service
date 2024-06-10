@@ -60,11 +60,12 @@ async function sendStatus() {
             return;
         }
 
-        if (activeInterface && activeInterface.type === 'Wired') {
-            ethconnected = true;
-        } else {
-            ethconnected = false;
-        }
+        console.log(activeInterface);
+        // if (activeInterface && activeInterface.type === 'Wired') {
+        //     ethconnected = true;
+        // } else {
+        //     ethconnected = false;
+        // }
     });
 
     let statString = `{"ethernet":${ethconnected}, "mqttError":${mqttError}};\n`;
@@ -79,7 +80,7 @@ async function sendStatus() {
 
 port.on('open', () => {
     console.log('Serial Port Opened');
-    setInterval(sendStatus, 3000);
+    setInterval(sendStatus, 5000);
 });
 
 parser.on('data', (data) => {
