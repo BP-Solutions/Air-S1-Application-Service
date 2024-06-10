@@ -9,8 +9,6 @@ export async function publishMessage(msg) {
         if (err) {
             console.error('Failed to publish message:', err);
             throw err;
-        } else {
-            console.log(`Message published to topic '${topic}': ${msgPayload}`);
         }
     });
 }
