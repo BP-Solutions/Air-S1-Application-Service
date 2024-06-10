@@ -64,13 +64,15 @@ async function sendStatus() {
         ethconnected = activeInterface.length >= 1;
         interfaces = activeInterface;
 
-        console.log(activeInterface);
+        // console.log(activeInterface);
         // if (activeInterface && activeInterface.type === 'Wired') {
         //     ethconnected = true;
         // } else {
         //     ethconnected = false;
         // }
     });
+
+    console.log(ethconnected);
 
     let statString = `{"ethernet":${interfaces}, "mqttError":${mqttError}};\n`;
 
