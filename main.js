@@ -121,7 +121,7 @@ async function sendStatus() {
 
     console.log(ethconnected);
 
-    let statString = `{"ethernet":${interfaces}, "mqttError":${mqttError}};\n`;
+    let statString = "080d1015";
 
     port.write(statString, (err) => {
         if (err) {
