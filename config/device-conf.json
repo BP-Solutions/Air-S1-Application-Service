@@ -1,5 +1,5 @@
 {
   "id": "unit-1",
   "server": "mqtt://10.0.0.101",
-  "topic": "sensors-v1"
+  "topic": "sensors-v1/nodes"
 }
