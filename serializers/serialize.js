@@ -1,10 +1,14 @@
 import {globalConfig, port} from "../main.js";
+import os from 'os';
+import prettyMs from 'pretty-ms';
 import {getNetwork} from "../utils/systemUtils.js";
 import {publishMessage} from "../mqtt/mqttMain.js";
 import {encodeSerial} from "../protobufs/proto.js";
 
 //todo very important math operation here, make sure to have those saved
 const createMessageObject = async (data) => {
+
+    const uptime = os.uptime() * 1000; // Convert seconds to milliseconds
     const networkInfo = await getNetwork();
     return {
         deviceID: globalConfig.id,
@@ -20,6 +24,7 @@ const createMessageObject = async (data) => {
             humidity: data.humidity,
         },
         deviceTelemetry: {
+            uptime: prettyMs(uptime),
             network: networkInfo,
         },
         timestamp: new Date().toISOString()

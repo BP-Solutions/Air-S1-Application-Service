@@ -24,7 +24,7 @@ client.on('error', (err) => {
 
 // serial
 export const port = new SerialPort({
-    path: '/COM6',
+    path: '/dev/myserialdevice',
     baudRate: 115200
 });
 
