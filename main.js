@@ -36,7 +36,6 @@ port.on('open', () => {
 });
 
 parser.on('data', (data) => {
-    console.log(data)
     decodeSerial(data);
 });
 

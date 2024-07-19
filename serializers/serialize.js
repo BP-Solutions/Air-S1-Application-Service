@@ -5,10 +5,10 @@ import {getNetwork} from "../utils/systemUtils.js";
 import {publishMessage} from "../mqtt/mqttMain.js";
 import {encodeSerial} from "../protobufs/proto.js";
 
-//todo very important math operation here, make sure to have those saved
+//todo very important scaled operation here, make sure to have those present
 const createMessageObject = async (data) => {
 
-    const uptime = os.uptime() * 1000; // Convert seconds to milliseconds
+    const uptime = os.uptime() * 1000;
     const networkInfo = await getNetwork();
     return {
         deviceID: globalConfig.id,
@@ -50,6 +50,5 @@ export async function callData() {
         if (err) {
             return console.error('Error on write:', err.message);
         }
-        console.log("Message written: ", hexString);
     });
 }

@@ -17,7 +17,6 @@ export function decodeSerial(data){
             bytes: String,
         });
 
-        console.log("Decoded object:", object);
         await sendMsg(object);
     });
 }
