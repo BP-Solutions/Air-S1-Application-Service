@@ -9,6 +9,8 @@ const port = new SerialPort({
     baudRate: 115200
 });
 
+const parser = port.pipe(new ReadlineParser({delimiter: '\r\n'}));
+
 port.on('open', async () => {
     console.log('Serial Port Opened');
 
@@ -23,5 +25,8 @@ port.on('open', async () => {
         }
     });
 
+});
 
+port.on('error', (err) => {
+    console.error('Serial Error:', err.message);
 });
