@@ -11,3 +11,4 @@ port.write(message, (err) => {
         return console.error('Error on write:', err.message);
     }
 });
+return;
