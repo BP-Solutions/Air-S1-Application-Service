@@ -1,5 +1,12 @@
 import {encodeSerial} from "../protobufs/proto.js";
-import {port} from "../main.js";
+
+import {SerialPort} from "serialport";
+import {ReadlineParser} from "@serialport/parser-readline";
+export const port = new SerialPort({
+    path: '/dev/myserialdevice',
+    baudRate: 115200
+});
+
 
 let payload = {statCode: 0, inErrorState: false, sampleSensors: false, configSXX: true, abcPer: 180, SXXCalType: 0};
 
