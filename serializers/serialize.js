@@ -41,7 +41,7 @@ export async function sendMsg(data) {
 }
 
 export async function callData() {
-    let payload = {statCode: 5, inErrorState: false, sampleSensors: true};
+    let payload = {statCode: 5, inErrorState: false, sampleSensors: true, configSXX: false, abcPer: 180, SXXCalType: 0};
 
     let hexString = await encodeSerial(payload);
 
